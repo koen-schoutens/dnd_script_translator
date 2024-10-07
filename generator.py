@@ -1,4 +1,8 @@
 import cv2
+# importing os module
+import os
+
+OUTPUT_PATH = './output'
 
 def getLetter(letter, img):
     number = ord(letter.lower()) -97
@@ -13,11 +17,12 @@ def getLetter(letter, img):
     return img_cropped
 
 
+pharase = input("Pharase you want to convert: ")
+
 img = cv2.imread('data/runes.png')
-my_string = "C***i* Darok"
 first = True
 
-for char in my_string:
+for char in pharase:
     img_character = getLetter(char, img)
     if first:
         first = False
@@ -25,8 +30,10 @@ for char in my_string:
     else:
         final_character = cv2.hconcat([final_character, img_character])
 
-cv2.imshow('final img', final_character)
-cv2.imwrite("output.png", final_character)
-cv2.waitKey(0)
+if not os.path.exists(OUTPUT_PATH):
+    os.mkdir(OUTPUT_PATH)
+
+
+cv2.imwrite(OUTPUT_PATH +"/image.png", final_character)
 cv2.destroyAllWindows()
 
